@@ -13,13 +13,19 @@ export class HeroService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
+
+  private heroesUrl = 'api/heroes';
+
   getHeroes(): Observable<Hero[]> {
-    this.messageService.add('HeroService: fetched heroes');
-    return of(HEROES);
+    return this.http.get<Hero[]>(this.heroesUrl)
   }
 
   getHero(id: number): Observable<Hero> {
     this.messageService.add('HeroService: fetched hero od=${id}');
     return of(HEROES.find(hero => hero.id === id));
+  }
+
+  private log(message: string) {
+    this.messageService.add('HeroService: ${message)');
   }
 }
